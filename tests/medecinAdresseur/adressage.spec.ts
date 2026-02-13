@@ -1,16 +1,25 @@
 import { test, expect } from '../../fixtures/AuthFixture';
-//import { AdressagePage } from '../../pages/AdressagePage';
+import { AdressagePage } from '../../pages/adressagePage';
 import { dossierTestData, generateRandomDossier } from '../../data/testData';
 
 test.describe('Medecin adresseur', () => {
-  test('Doit adresser un paient', async ({ authenticatedMedecinAdresseur }) => {
-   // const adressagePage = new AdressagePage(authenticatedMedecinAdresseur);
-    const testData = generateRandomDossier();
+  let adressagePage: AdressagePage;
 
-   // await adressagePage.createDossier(testData);
+   test.beforeEach(async ({ authenticatedMedecinAdresseur }) => {
+      adressagePage = new AdressagePage(authenticatedMedecinAdresseur);
+      //await dossierPage.navigateToDossiers();
+      await adressagePage.ouvrirFormulaireRecommandation();
+    });
 
-    // Ajouter vos assertions ici
-    await expect(authenticatedMedecinAdresseur).toHaveURL(/.*mezl\/dossiers.*/);
+   test('Doit adresser un patient', async ({ authenticatedMedecinAdresseur }) => {
+
+   });
+   
+  //
+
+//    // await adressagePage.createDossier(testData);
+// tests/medecinAdresseur/adressage.spec.ts
+//     // Ajouter vos assertions ici
+//     await expect(authenticatedMedecinAdresseur).toHaveURL(/.*mezl\/dossiers.*/);
   
 })
-});

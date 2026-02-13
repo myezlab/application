@@ -32,7 +32,7 @@ test.describe('Coordinatrice - Création de dossier', () => {
     expect(responseBody.message).toBe("Vérifiez d'avoir bien rempli tous les champs");
     
     // Vérification des champs obligatoires avec helper
-    verifyRequiredFieldsErrors(responseBody.errors);
+    await dossierPage.verifyRequiredFieldsErrors(responseBody.errors);
     
     console.log('✅ Validation des champs obligatoires réussie');
   });
@@ -40,19 +40,3 @@ test.describe('Coordinatrice - Création de dossier', () => {
 
 
 
-/**
- * Vérifie les erreurs des 4 champs obligatoires
- */
-function verifyRequiredFieldsErrors(errors: any) {
-  const requiredFields = [
-    { field: 'c_user_firstname', expectedMessage: 'Non valide' },
-    { field: 'c_user_lastname', expectedMessage: 'Non valide' },
-    { field: 'c_user_phone', expectedMessage: 'Non valide' },
-    { field: 'c_user_mail', expectedMessage: 'Adresse email non valide' }
-  ];
-
-  requiredFields.forEach(({ field, expectedMessage }) => {
-    expect(errors[field].isValid).toBe(false);
-    expect(errors[field].message).toBe(expectedMessage);
-  });
-}

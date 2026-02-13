@@ -1,5 +1,6 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { BasePage } from './basePage';
+
 
 export interface DossierData {
   nom: string;
@@ -97,5 +98,19 @@ export class DossierPage extends BasePage {
   ]);
   return response;
 }
+
+async verifyRequiredFieldsErrors(errors: any) {
+    const requiredFields = [
+      { field: 'c_user_firstname', expectedMessage: 'Non valide' },
+      { field: 'c_user_lastname', expectedMessage: 'Non valide' },
+      { field: 'c_user_phone', expectedMessage: 'Non valide' },
+      { field: 'c_user_mail', expectedMessage: 'Adresse email non valide' }
+    ];
+
+    for (const { field, expectedMessage } of requiredFields) {
+      expect(errors[field].isValid).toBe(false);
+      expect(errors[field].message).toBe(expectedMessage);
+    }
+  }
 
 }
