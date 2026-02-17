@@ -20,9 +20,7 @@ test.describe('Medecin adresseur', () => {
 
     });
 
-   test('Doit adresser un patient', async ({ authenticatedMedecinAdresseur }) => {
 
-   });
    
   //
 
