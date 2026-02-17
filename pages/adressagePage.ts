@@ -25,9 +25,9 @@ export class AdressagePage extends BasePage {
   private readonly saveSignature = '#saveSignature';
 
   private readonly fields = {
-    nom: '#c_user_firstname',
-    prenom: '#c_user_lastname',
-    telephone: '#c_user_phone',
+    nom: '#user_lastname',
+    prenom: '#user_firstname',
+    telephone: '#user_phone',
     type_soin: '#pi_type_soin',
     type_dts: '#pi_type_dts',
     signature_mail_adressage: '#signature_mail_adressage',
@@ -80,7 +80,19 @@ async agrandirMenu() {
     
     // Attendre que le formulaire de création apparaisse
     await this.page.waitForSelector(this.fields.nom, { state: 'visible' });
+   
     
+    //await this.page.click(this.recoPatient);
+    
+  }
+
+  async validerFormulaire(){
+    await this.page.click(this.saveReco);
+  }
+
+    async envoyerAdressage(){
+
+    await this.page.click(this.saveSignature);
   }
   
   async fillAdressageForm(data: AdressageData){
@@ -89,46 +101,24 @@ async agrandirMenu() {
     await this.page.fill(this.fields.nom, data.nom)
     await this.page.fill(this.fields.prenom, data.prenom);
     await this.page.fill(this.fields.telephone, data.telephone);
-    await this.page.fill(this.fields.type_soin, data.type_soin);
-    await this.page.fill(this.fields.type_dts, data.type_dts);
-    await this.page.fill(this.fields.signature_mail_adressage, data.signature_mail_adressage);
+    await this.page.selectOption('#pi_type_soin', { label: data.type_soin });
+    await this.page.selectOption('#pi_type_dts', { label: data.type_dts });
+   
     
-       console.log('✅ Formulaire rempli');
+    console.log('✅ Formulaire rempli');
   
 
   }
 
-//   async remplirFormulaire(data: BasePage) {
-    // Champs obligatoires
-//     await this.inputPrenom.fill(data.prenom);
-//     await this.inputNom.fill(data.nom);
+  async fillSignatureForm(data: AdressageData){
+    console.log('📝 Page signature...');
 
-//     // Champs optionnels
-//     if (data.taille) {
-//       await this.inputTaille.fill(data.taille);
-//     }
-//     if (data.poids) {
-//       await this.inputPoids.fill(data.poids);
-//     }
-//     if (data.email) {
-//       await this.inputEmail.fill(data.email);
-//     }
-//     if (data.telephone) {
-//       await this.inputTelephone.fill(data.telephone);
-//     }
-//     if (data.dateNaissance) {
-//       await this.inputDateNaissance.fill(data.dateNaissance);
-//     }
-//   }
+    await this.page.fill(this.fields.signature_mail_adressage, data.signature_mail_adressage);
+     
+    console.log('✅ Signé');
+  }
+  
+ 
 
-//   async soumettre() {
-//     await this.btnSubmit.click();
-//     await this.page.waitForLoadState('networkidle');
-//   }
 
-//   async creerRecommandation(data: PatientRecommandation) {
-//     // await this.ouvrirFormulaireRecommandation();
-//     // await this.remplirFormulaire(data);
-//     // await this.soumettre();
-//   }
 }

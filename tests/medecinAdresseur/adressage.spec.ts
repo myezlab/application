@@ -1,14 +1,23 @@
 import { test, expect } from '../../fixtures/AuthFixture';
 import { AdressagePage } from '../../pages/adressagePage';
-import { dossierTestData, generateRandomDossier } from '../../data/testData';
+import { generateRandomAdressage } from '../../data/testData';
+
 
 test.describe('Medecin adresseur', () => {
   let adressagePage: AdressagePage;
 
    test.beforeEach(async ({ authenticatedMedecinAdresseur }) => {
       adressagePage = new AdressagePage(authenticatedMedecinAdresseur);
+
+      const testData = generateRandomAdressage();
       //await dossierPage.navigateToDossiers();
       await adressagePage.ouvrirFormulaireRecommandation();
+      await adressagePage.fillAdressageForm(testData);
+      await adressagePage.validerFormulaire();
+      await adressagePage.fillSignatureForm(testData);
+      await adressagePage.envoyerAdressage();
+
+
     });
 
    test('Doit adresser un patient', async ({ authenticatedMedecinAdresseur }) => {
